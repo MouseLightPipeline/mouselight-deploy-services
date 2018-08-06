@@ -6,4 +6,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - 80:80
+    extra_hosts:
+      - "ml-ubuntu-test:10.123.1.184"
+      - "ml-ubuntu-test.hhmi.org:10.123.1.184"
     restart: unless-stopped
