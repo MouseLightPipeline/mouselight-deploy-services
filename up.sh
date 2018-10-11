@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-docker-compose -p landing up -d
+source options.sh
+
+docker-compose -p ${MOUSELIGHT_COMPOSE_PROJECT} up -d

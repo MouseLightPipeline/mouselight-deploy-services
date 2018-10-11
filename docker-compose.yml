@@ -1,12 +1,38 @@
 version: '3.1'
 services:
-  proxy:
-    build:
-      context:  ./nginx
-      dockerfile: Dockerfile
+#  proxy:
+#    build:
+#      context:  ./nginx
+#      dockerfile: Dockerfile
+#    ports:
+#      - 80:80
+#    extra_hosts:
+#      - "ml-ubuntu-test:10.123.1.184"
+#      - "ml-ubuntu-test.hhmi.org:10.123.1.184"
+#    restart: unless-stopped
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
+    container_name: elasticsearch
+    environment:
+    - cluster.name=docker-cluster
+    - bootstrap.memory_lock=true
+    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+    - esdata:/usr/share/elasticsearch/data
     ports:
-      - 80:80
-    extra_hosts:
-      - "ml-ubuntu-test:10.123.1.184"
-      - "ml-ubuntu-test.hhmi.org:10.123.1.184"
-    restart: unless-stopped
+      - 9200:9200
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.4.2
+    container_name: kibana
+    ports:
+      - 9400:5601
+
+volumes:
+  esdata:
+
+networks:
+  back_tier:
