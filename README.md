@@ -10,3 +10,18 @@ is not a requirement - only the IP must map correctly.
 
 Specific Mouse Light Systems (dashboard, pipeline, neuron browser, etc) have their own deployment compose files and are
 managed independently.
+
+
+    server {
+        listen 80;
+        server_name        pipeline pipeline.mouselight pipeline.mouselight.int.janelia.org;
+        proxy_redirect     off;
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Host $server_name;
+
+        location / {
+            return 302 $scheme://ml-ubuntu-test:7101;
+        }
+   }
