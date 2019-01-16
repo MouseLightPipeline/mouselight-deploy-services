@@ -34,6 +34,8 @@ services:
       - 9400:5601
   landing:
     image: mouselightresearch/landing:1.4
+    environment:
+      NODE_ENV: production
     volumes:
       - "${MOUSELIGHT_LOG_VOLUME}:/var/log/mouselight"
     ports:
