@@ -9,8 +9,8 @@ services:
     volumes:
       - "${MOUSELIGHT_LOG_VOLUME}:/var/log/nginx"
     extra_hosts:
-      - "ml-ubuntu-test:10.123.1.184"
-      - "ml-ubuntu-test.hhmi.org:10.123.1.184"
+      - "mouselight:${MOUSELIGHT_IP}"
+      - "mouselight.int.janelia.org:${MOUSELIGHT_IP}"
     restart: unless-stopped
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
