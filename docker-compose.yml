@@ -7,12 +7,12 @@ services:
     ports:
       - 80:80
     volumes:
-      - "${MOUSELIGHT_LOG_VOLUME}:/var/log/nginx"
+      - "${MOUSELIGHT_LOG_VOLUME}:/var/logs/nginx"
     extra_hosts:
       - "mouselight.int.janelia.org:${MOUSELIGHT_IP}"
     networks:
       - back_tier
-    command: /bin/bash -c "touch /var/log/nginx/nginx-error.log && touch /var/log/nginx/nginx-access.log && chown mluser:mousebrainmicro /var/log/nginx/nginx-*.log && exec nginx -g 'daemon off;'"
+    command: /bin/bash -c "touch /var/logs/nginx/nginx-error.log && touch /var/logs/nginx/nginx-access.log && chown mluser:mousebrainmicro /var/logs/nginx/nginx-*.log && exec nginx -g 'daemon off;'"
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
     container_name: elasticsearch
