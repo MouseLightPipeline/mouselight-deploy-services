@@ -9,8 +9,9 @@ services:
     volumes:
       - "${MOUSELIGHT_LOG_VOLUME}:/var/log/nginx"
     extra_hosts:
-      - "mouselight:${MOUSELIGHT_IP}"
       - "mouselight.int.janelia.org:${MOUSELIGHT_IP}"
+    networks:
+      - back_tier
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
     container_name: elasticsearch
@@ -26,11 +27,15 @@ services:
       - esdata:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
+    networks:
+      - back_tier
   kibana:
     image: docker.elastic.co/kibana/kibana:6.4.2
     container_name: kibana
     ports:
       - 9400:5601
+    networks:
+      - back_tier
   landing:
     hostname: landing
     image: mouselightresearch/landing:1.4
@@ -40,6 +45,8 @@ services:
       - "${MOUSELIGHT_LOG_VOLUME}:/var/log/mouselight"
     ports:
       - 8080:5000
+    networks:
+      - back_tier
 
 volumes:
   esdata:
